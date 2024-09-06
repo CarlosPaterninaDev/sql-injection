@@ -39,20 +39,20 @@ export class AppComponent {
     await this.databaseService.init();
 
     await this.databaseService.addUser({
-      name: 'John Doe',
-      email: 'jhon1@example.com',
+      name: 'Carlos Paternina',
+      email: 'carlos@example.com',
       password: 'P@ssw0rd',
     });
 
     await this.databaseService.addUser({
       name: 'John Doe',
-      email: 'jhon2@example.com',
+      email: 'jhon@example.com',
       password: 'H4rdP@ssw0rd',
     });
 
    await this.databaseService.addUser({
-      name: 'John Doe',
-      email: 'jhon3@example.com',
+      name: 'User Example',
+      email: 'user@example.com',
       password: '12345',
     });
   }

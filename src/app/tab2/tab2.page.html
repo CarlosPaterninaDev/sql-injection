@@ -11,13 +11,11 @@
       <ion-label style="font-size: 32px;">Login</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" [(ngModel)]="email"></ion-input>
+      <ion-input labelPlacement="floating" label="Email" type="text" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
+      <ion-input labelPlacement="floating" label="Password"  type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
     <h2 style="color: crimson; font-size: 20px;"> {{ error() }}</h2>
