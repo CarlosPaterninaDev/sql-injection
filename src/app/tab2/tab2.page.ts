@@ -154,8 +154,13 @@ export class Tab2Page {
     const { data } = await actionSheet.onDidDismiss();
 
     if (data) {
-      this.email = data.email;
-      this.password = data.password;
+      if (this.isSecure()) {
+        this.form.controls['email'].setValue(data.email);
+        this.form.controls['password'].setValue(data.password);
+      } else {
+        this.email = data.email;
+        this.password = data.password;
+      }
     }
   }
 
