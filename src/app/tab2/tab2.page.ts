@@ -1,5 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { AlertController, ActionSheetController } from '@ionic/angular';
+import {
+  AlertController,
+  ActionSheetController,
+  ToastController,
+} from '@ionic/angular';
 import {
   IonHeader,
   IonToolbar,
@@ -14,11 +18,24 @@ import {
   IonFabButton,
   IonIcon,
   IonListHeader,
+  IonToast,
+  IonInputPasswordToggle,
 } from '@ionic/angular/standalone';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DatabaseService } from '../services/database.service';
 import { addIcons } from 'ionicons';
-import { sadOutline, list } from 'ionicons/icons';
+import {
+  sadOutline,
+  list,
+  lockClosedOutline,
+  lockOpenOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-tab2',
@@ -26,6 +43,7 @@ import { sadOutline, list } from 'ionicons/icons';
   styleUrls: ['tab2.page.scss'],
   standalone: true,
   imports: [
+    IonToast,
     IonListHeader,
     IonIcon,
     IonFabButton,
@@ -40,25 +58,47 @@ import { sadOutline, list } from 'ionicons/icons';
     IonTitle,
     IonContent,
     FormsModule,
+    ReactiveFormsModule,
+    IonInputPasswordToggle,
   ],
 })
 export class Tab2Page {
   databaseService = inject(DatabaseService);
+  toastController = inject(ToastController);
   alert = inject(AlertController);
   actionSheetCtrl: ActionSheetController = inject(ActionSheetController);
 
   users = this.databaseService.getUsers();
+  isSecure = signal<boolean>(true);
 
   email!: string;
   password!: string;
   error = signal<string>('');
   showDatabase = signal<boolean>(false);
 
+  form!: FormGroup;
+  fb = inject(FormBuilder);
+
   constructor() {
-    addIcons({ sadOutline, list });
+    addIcons({ lockClosedOutline, lockOpenOutline, sadOutline, list });
+
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.form.valueChanges.subscribe((value) => {
+      this.email = value.email.trim();
+      this.password = value.password.trim();
+    });
   }
 
   login() {
+    if (this.form.invalid && this.isSecure()) {
+      this.error.set('Invalid form');
+      return;
+    }
+
     this.error.set('');
 
     this.databaseService.login(this.email, this.password).then(
@@ -117,5 +157,18 @@ export class Tab2Page {
       this.email = data.email;
       this.password = data.password;
     }
+  }
+
+  async changeSecure() {
+    this.isSecure.set(!this.isSecure());
+
+    const toast = await this.toastController.create({
+      message: `Secure form mode ${this.isSecure() ? 'enabled' : 'disabled'}`,
+      duration: 1500,
+      position: 'top',
+      color: this.isSecure() ? 'success' : 'danger',
+    });
+
+    await toast.present();
   }
 }

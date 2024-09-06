@@ -5,20 +5,77 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
   <ion-grid fixed class="ion-padding">
+
+
     <ion-list-header mode="ios">
-      <ion-label style="font-size: 32px;">Login</ion-label>
+      <ion-label  (click)="changeSecure()" style="font-size: 32px"
+        >Login @if (isSecure()) {
+        <ion-icon  color="success" name="lock-closed-outline"></ion-icon>
+        }@else {
+        <ion-icon color="danger" name="lock-open-outline"></ion-icon>
+    
+        }
+      </ion-label>
+
     </ion-list-header>
+
+    @if (isSecure()) {
+
+    <small class="ion-padding" style="min-height: 120px; display: block;">This form is not vulnerable to SQL injection attacks. All user inputs are properly sanitized using prepared statements, parameterized queries, or ORM frameworks, ensuring that only safe and expected data is processed by the database.</small>
+
+    <form [formGroup]="form">
+      <ion-item>
+        <ion-input
+          errorText="Invalid email"
+          labelPlacement="floating"
+          label="Email"
+          type="text"
+          formControlName="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          errorText="Invalid password"
+          labelPlacement="floating"
+          label="Password"
+          type="password"
+          formControlName="password"
+        >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      
+      </ion-input>
+      </ion-item>
+    </form>
+
+    }@else {
+
+    <small class="ion-padding" style="min-height: 120px; display: block;">This form is vulnerable to SQL injection attacks. It does not properly sanitize user inputs, allowing malicious users to inject SQL commands that can compromise the database. It is recommended to fix this vulnerability by using prepared statements, parameterized queries, or ORM frameworks that handle input sanitization automatically.</small>
+
     <ion-item>
-      <ion-input labelPlacement="floating" label="Email" type="text" [(ngModel)]="email"></ion-input>
+      <ion-input
+        labelPlacement="floating"
+        label="Email"
+        type="text"
+        [(ngModel)]="email"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input labelPlacement="floating" label="Password"  type="password" [(ngModel)]="password"></ion-input>
+      <ion-input
+        labelPlacement="floating"
+        label="Password"
+        type="password"
+        [(ngModel)]="password"
+      >
+      <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+    </ion-input>
     </ion-item>
 
-    <h2 style="color: crimson; font-size: 20px;"> {{ error() }}</h2>
+    }
+
+    <h2 style="color: crimson; font-size: 20px">{{ error() }}</h2>
 
     <ion-button
       class="ion-padding-top ion-padding-bottom"
@@ -83,3 +140,4 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
