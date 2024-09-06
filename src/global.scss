@@ -36,6 +36,16 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import '@ionic/angular/css/palettes/dark.system.css';
 
+
+body {
+  font-size: clamp(1rem, 2vw, 3rem);
+  /* 
+    1rem: tamaño mínimo (16px) 
+    2vw: tamaño preferido que escala con el viewport 
+    3rem: tamaño máximo (48px)
+  */
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -45,7 +55,6 @@
 }
 
 .sql {
-  font-size: 30px;
   color: #18c6c3;
 
   span {
