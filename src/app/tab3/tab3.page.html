@@ -1,9 +1,3 @@
-<ion-header mode="md">
-  <ion-toolbar>
-    <ion-title> </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-grid fixed class="ion-padding">
     <ion-list-header mode="ios">
@@ -14,7 +8,6 @@
       <ion-button href="https://github.com/CarlosPaterninaDev/sql-injection">
         <ion-icon size="large" name="logo-github"></ion-icon>
       </ion-button>
-      
     </ion-list-header>
 
     <ion-text class="ion-padding">
@@ -31,28 +24,78 @@
       </p>
 
       <ion-text color="danger">
-        <h1>Advertencia: </h1>
+        <h1>Advertencia:</h1>
       </ion-text>
 
       <ul>
         <li>
-          Uso Restringido: La demostración de SQL Injection y otros
-      métodos de explotación de seguridad en este proyecto debe ser utilizada
-      únicamente en entornos controlados y con propósitos educativos.
-
+          Uso Restringido: La demostración de SQL Injection y otros métodos de
+          explotación de seguridad en este proyecto debe ser utilizada
+          únicamente en entornos controlados y con propósitos educativos.
         </li>
         <li>
-          Prohibido
-          el Uso Malintencionado: No se debe utilizar este conocimiento para atacar
-          sistemas sin autorización, ya que ello es ilegal y puede conllevar graves
-          consecuencias legales.
+          Prohibido el Uso Malintencionado: No se debe utilizar este
+          conocimiento para atacar sistemas sin autorización, ya que ello es
+          ilegal y puede conllevar graves consecuencias legales.
         </li>
 
         <li>
-          Responsabilidad Limitada: Los autores de este proyecto no se hacen responsables de cualquier uso indebido de la información proporcionada.
+          Responsabilidad Limitada: Los autores de este proyecto no se hacen
+          responsables de cualquier uso indebido de la información
+          proporcionada.
         </li>
       </ul>
-      
+    </ion-text>
+
+    <ion-text>
+      <ion-text color="primary">
+        <h1>Ejemplos:</h1>
+      </ion-text>
+      <ul>
+        <li>
+          <p style="font-weight: bold">
+            Bypass de Autenticación: Un atacante podría intentar omitir la
+            autenticación ingresando algo como:
+          </p>
+          <br />
+          <code>Entrada del email: ' OR '1'='1</code>
+
+          <p>
+            Esto siempre devolverá todos los registros de la tabla users porque
+            la condición '1'='1' es siempre verdadera.
+          </p>
+        </li>
+        <li>
+          <p style="font-weight: bold">
+            Usando un comentario para ignorar parte de la consulta:
+          </p>
+
+          <code>
+            <p>Entrada del email: admin' --</p>
+            <p>Entrada del password: (cualquier cosa)</p>
+          </code>
+
+          <p>
+            Todo lo que está después de -- se ignora, permitiendo que el
+            atacante se autentique como 'admin' sin necesidad de una contraseña
+            válida.
+          </p>
+        </li>
+
+        <li>
+          <p style="font-weight: bold">Modificación de Datos:</p>
+
+          <code>
+            <p>
+              Entrada del email: '; UPDATE users SET password='hacked' WHERE
+              email='admin'; --
+            </p>
+            <p>Entrada del password: (cualquier cosa)</p>
+          </code>
+
+          <p>Esto cambiaría la contraseña del usuario 'admin' a 'hacked'.</p>
+        </li>
+      </ul>
     </ion-text>
   </ion-grid>
 </ion-content>

@@ -31,7 +31,7 @@ import {
 import { DatabaseService } from '../services/database.service';
 import { addIcons } from 'ionicons';
 import {
-  sadOutline,
+  server,
   list,
   lockClosedOutline,
   lockOpenOutline,
@@ -74,13 +74,13 @@ export class Tab2Page {
   email!: string;
   password!: string;
   error = signal<string>('');
-  showDatabase = signal<boolean>(false);
+  showDatabase = signal<boolean>(true);
 
   form!: FormGroup;
   fb = inject(FormBuilder);
 
   constructor() {
-    addIcons({ lockClosedOutline, lockOpenOutline, sadOutline, list });
+    addIcons({ lockClosedOutline, lockOpenOutline, server, list });
 
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

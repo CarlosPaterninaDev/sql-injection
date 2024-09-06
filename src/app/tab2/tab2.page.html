@@ -1,28 +1,26 @@
-<ion-header mode="md">
-  <ion-toolbar>
-    <ion-title> </ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
   <ion-grid fixed class="ion-padding">
-
-
     <ion-list-header mode="ios">
-      <ion-label  (click)="changeSecure()" style="font-size: 32px"
+      <ion-label (click)="changeSecure()" style="font-size: 32px"
         >Login @if (isSecure()) {
-        <ion-icon  color="success" name="lock-closed-outline"></ion-icon>
+        <ion-icon color="success" name="lock-closed-outline"></ion-icon>
         }@else {
         <ion-icon color="danger" name="lock-open-outline"></ion-icon>
-    
+
         }
       </ion-label>
-
     </ion-list-header>
 
     @if (isSecure()) {
 
-    <small class="ion-padding" style="min-height: 120px; display: block;">This form is not vulnerable to SQL injection attacks. All user inputs are properly sanitized using prepared statements, parameterized queries, or ORM frameworks, ensuring that only safe and expected data is processed by the database.</small>
+    <small class="ion-padding" style="min-height: 100px; display: block"
+      >This form is not vulnerable to SQL injection attacks. All user inputs are
+      properly sanitized using prepared statements, parameterized queries, or
+      ORM frameworks, ensuring that only safe and expected data is processed by
+      the database.</small
+    >
 
     <form [formGroup]="form">
       <ion-item>
@@ -43,15 +41,20 @@
           type="password"
           formControlName="password"
         >
-        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-      
-      </ion-input>
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
       </ion-item>
     </form>
 
     }@else {
 
-    <small class="ion-padding" style="min-height: 120px; display: block;">This form is vulnerable to SQL injection attacks. It does not properly sanitize user inputs, allowing malicious users to inject SQL commands that can compromise the database. It is recommended to fix this vulnerability by using prepared statements, parameterized queries, or ORM frameworks that handle input sanitization automatically.</small>
+    <small class="ion-padding" style="min-height: 100px; display: block"
+      >This form is vulnerable to SQL injection attacks. It does not properly
+      sanitize user inputs, allowing malicious users to inject SQL commands that
+      can compromise the database. It is recommended to fix this vulnerability
+      by using prepared statements, parameterized queries, or ORM frameworks
+      that handle input sanitization automatically.</small
+    >
 
     <ion-item>
       <ion-input
@@ -69,8 +72,8 @@
         type="password"
         [(ngModel)]="password"
       >
-      <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-    </ion-input>
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
     </ion-item>
 
     }
@@ -83,25 +86,54 @@
       (click)="login()"
       >Login</ion-button
     >
-
+    @if (showDatabase()) {
     <div
       style="
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border: 2px dotted black;
+        position: relative;
+        padding: 30px 10px 10px;
       "
-      class="ion-padding"
     >
-      @if (showDatabase()) {
-      <p class="sql">
-        <code
-          >SELECT * FROM users WHERE email = <span>'{{ email }}'</span> AND
-          password = <span>'{{password}}'</span></code
-        >
+      <p
+        style="
+          position: absolute;
+          top: -2px;
+          right: 0;
+          background-color: #333;
+          color: whitesmoke;
+          margin: 0;
+        "
+      >
+        Backend Representation
       </p>
 
-      <table>
+      <div
+        style="border: 1px dotted black; position: relative; padding: 15px 10px"
+      >
+      <p
+      style="
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #333;
+        color: whitesmoke;
+        margin: 0;
+      "
+    >
+      Query
+    </p>
+        <p class="sql">
+          <code
+            >SELECT * FROM users WHERE email = <span>'{{ email }}'</span> AND
+            password = <span>'{{password}}'</span></code
+          >
+        </p>
+      </div>
+      <table style="width: 90%; height: 90%; margin-top: 10px;">
         <tr>
           <th colspan="4">Users</th>
         </tr>
@@ -124,13 +156,14 @@
         </tr>
         }
       </table>
-      }
+      <figure>Table <i>Users</i> in BD</figure>
     </div>
+    }
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="showDatabase.set(!showDatabase())">
-      <ion-icon name="sad-outline"></ion-icon>
+      <ion-icon name="server"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
@@ -140,4 +173,3 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
-
