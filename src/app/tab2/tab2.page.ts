@@ -7,18 +7,31 @@ import {
   IonContent,
   IonItem,
   IonInput,
-  IonLabel, IonButton, IonGrid, IonFab, IonFabButton, IonIcon, IonListHeader } from '@ionic/angular/standalone';
+  IonLabel,
+  IonButton,
+  IonGrid,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonListHeader,
+} from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { DatabaseService } from '../services/database.service';
 import { addIcons } from 'ionicons';
-import { sadOutline , list } from 'ionicons/icons';
+import { sadOutline, list } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonListHeader, IonIcon, IonFabButton, IonFab, IonGrid, IonButton, 
+  imports: [
+    IonListHeader,
+    IonIcon,
+    IonFabButton,
+    IonFab,
+    IonGrid,
+    IonButton,
     IonItem,
     IonHeader,
     IonLabel,
@@ -26,14 +39,12 @@ import { sadOutline , list } from 'ionicons/icons';
     IonToolbar,
     IonTitle,
     IonContent,
-    FormsModule
-
+    FormsModule,
   ],
 })
 export class Tab2Page {
-
   databaseService = inject(DatabaseService);
-  alert =  inject(AlertController);
+  alert = inject(AlertController);
   actionSheetCtrl: ActionSheetController = inject(ActionSheetController);
 
   users = this.databaseService.getUsers();
@@ -47,27 +58,29 @@ export class Tab2Page {
     addIcons({ sadOutline, list });
   }
 
-
-  login(){
-
+  login() {
     this.error.set('');
 
-    this.databaseService.login(this.email, this.password).then((res) => {
-      this.alert.create({
-        header: 'Login',
-        subHeader: `response: ${JSON.stringify(res)}`,
-        message: res ? 'Login success' : 'Login failed',
-        buttons: ['OK']
-      }).then((alert) => {
-        alert.present();
-      });
-    }, (err) => {
-      this.error.set(err);
-    });
-
+    this.databaseService.login(this.email, this.password).then(
+      (res) => {
+        this.alert
+          .create({
+            header: 'Login',
+            subHeader: `response: ${JSON.stringify(res)}`,
+            message: res ? 'Login success' : 'Login failed',
+            buttons: ['OK'],
+          })
+          .then((alert) => {
+            alert.present();
+          });
+      },
+      (err) => {
+        this.error.set(err);
+      }
+    );
   }
 
-  async showList(){
+  async showList() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'SQL Injections',
       buttons: [
@@ -88,7 +101,8 @@ export class Tab2Page {
         {
           text: 'Modificar Datos',
           data: {
-            email: "jhon1@example.com'; UPDATE users SET password='hacked' WHERE email='jhon1@example.com'; --",
+            email:
+              "jhon1@example.com'; UPDATE users SET password='hacked' WHERE email='jhon1@example.com'; --",
             password: '1',
           },
         },
@@ -99,7 +113,9 @@ export class Tab2Page {
 
     const { data } = await actionSheet.onDidDismiss();
 
-    console.log(data);
-    this.email = data.email;
-    this.password = data.password;
-  }}
+    if (data) {
+      this.email = data.email;
+      this.password = data.password;
+    }
+  }
+}

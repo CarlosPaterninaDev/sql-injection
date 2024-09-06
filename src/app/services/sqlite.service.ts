@@ -282,7 +282,7 @@ export class SQLiteService {
     version: number
   ): Promise<SQLiteDBConnection> {
     if (this.sqlite != null) {
-        console.log(database, encrypted, mode, version);
+
       try {
         /*                if(encrypted) {
                     if(this.native) {
@@ -300,7 +300,6 @@ export class SQLiteService {
           version,
           false
         );
-        console.log(db);
         if (db != null) {
           return Promise.resolve(db);
         } else {

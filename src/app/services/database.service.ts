@@ -59,21 +59,16 @@ export class DatabaseService {
 
     console.log(`>>>> in App  this.initPlugin ${this.initPlugin}`);
 
-    console.log('initializeApp end');
-
     return isWeb;
   }
 
   async init(): Promise<void> {
-    console.log('init');
     this.db = await this.sqlite.createConnection(
       BD_USERS,
       false,
       'no-encryption',
       1
     );
-
-    console.log(this.db);
 
     await this.db.open();
 
@@ -129,9 +124,8 @@ export class DatabaseService {
 
     this.loadUsers();
 
-
     return {
-      ...user
+      ...user,
     };
   }
 }
