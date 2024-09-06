@@ -1,17 +1,86 @@
-<ion-header [translucent]="true">
+<ion-header mode="md">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title> </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ 
+  <ion-grid fixed class="ion-padding">
+    <ion-list-header mode="ios">
+      <ion-label style="font-size: 32px;">Login</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" [(ngModel)]="email"></ion-input>
+    </ion-item>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <h2 style="color: crimson; font-size: 20px;"> {{ error() }}</h2>
+
+    <ion-button
+      class="ion-padding-top ion-padding-bottom"
+      expand="block"
+      (click)="login()"
+      >Login</ion-button
+    >
+
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      @if (showDatabase()) {
+      <p class="sql">
+        <code
+          >SELECT * FROM users WHERE email = <span>'{{ email }}'</span> AND
+          password = <span>'{{password}}'</span></code
+        >
+      </p>
+
+      <table>
+        <tr>
+          <th colspan="4">Users</th>
+        </tr>
+
+        <tr>
+          <th>Id</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>User</th>
+        </tr>
+
+        @for (item of users(); track $index) {
+        <tr [class.same]="item.email === email">
+          <td>{{ item.id }}</td>
+          <td [class.match]="item.email === email">{{ item.email }}</td>
+          <td [class.match]="item.password === password">
+            {{ item.password }}
+          </td>
+          <td>{{ item.name }}</td>
+        </tr>
+        }
+      </table>
+      }
+    </div>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showDatabase.set(!showDatabase())">
+      <ion-icon name="sad-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="showList()">
+      <ion-icon name="list"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

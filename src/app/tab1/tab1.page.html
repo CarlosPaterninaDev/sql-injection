@@ -1,17 +1,25 @@
-<ion-header [translucent]="true">
+<ion-header mode="md">
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content  [fullscreen]="true">
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-grid class="ion-padding" fixed>
+
+    <ion-list-header mode="ios">
+      <ion-label style="font-size: 32px;">User list</ion-label>
+      <ion-button>See All</ion-button>
+    </ion-list-header>
+    @for (item of users(); track $index) {
+    <ion-item>
+      <ion-label>
+        <p>{{item.name}}</p>
+        <h2>{{item.email}}</h2>
+        <p>{{item.password}}</p>
+      </ion-label>
+    </ion-item>
+    }
+  </ion-grid>
 </ion-content>

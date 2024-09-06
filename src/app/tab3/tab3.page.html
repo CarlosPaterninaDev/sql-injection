@@ -1,17 +1,58 @@
-<ion-header [translucent]="true">
+<ion-header mode="md">
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+    <ion-title> </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid fixed class="ion-padding">
+    <ion-list-header mode="ios">
+      <ion-label style="font-size: 32px"
+        >Información <br />
+        del proyecto
+      </ion-label>
+      <ion-button>
+        <ion-icon size="large" name="logo-github"></ion-icon>
+      </ion-button>
+      
+    </ion-list-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+    <ion-text class="ion-padding">
+      <h1>SQL Injection</h1>
+      <p>
+        El SQL Injection ocurre cuando un atacante puede manipular una consulta
+        SQL mediante la inserción de código malicioso en los campos de entrada.
+      </p>
+
+      <p>
+        Este proyecto está destinado exclusivamente a fines académicos y de
+        aprendizaje. Contiene ejemplos y técnicas relacionadas con SQL Injection
+        para ilustrar vulnerabilidades comunes en aplicaciones web.
+      </p>
+
+      <ion-text color="danger">
+        <h1>Advertencia: </h1>
+      </ion-text>
+
+      <ul>
+        <li>
+          Uso Restringido: La demostración de SQL Injection y otros
+      métodos de explotación de seguridad en este proyecto debe ser utilizada
+      únicamente en entornos controlados y con propósitos educativos.
+
+        </li>
+        <li>
+          Prohibido
+          el Uso Malintencionado: No se debe utilizar este conocimiento para atacar
+          sistemas sin autorización, ya que ello es ilegal y puede conllevar graves
+          consecuencias legales.
+        </li>
+
+        <li>
+          Responsabilidad Limitada: Los autores de este proyecto no se hacen responsables de cualquier uso indebido de la información proporcionada.
+        </li>
+      </ul>
+      
+    </ion-text>
+  </ion-grid>
 </ion-content>
