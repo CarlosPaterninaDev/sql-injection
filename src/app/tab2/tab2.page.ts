@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {
   AlertController,
   ActionSheetController,
@@ -36,6 +37,16 @@ import {
   lockClosedOutline,
   lockOpenOutline,
 } from 'ionicons/icons';
+
+
+
+export function sqlInjectionValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const forbiddenChars = /['"%;()]/;
+    const forbidden = forbiddenChars.test(control.value);
+    return forbidden ? { sqlInjection: { value: control.value } } : null;
+  };
+}
 
 @Component({
   selector: 'app-tab2',
@@ -84,7 +95,7 @@ export class Tab2Page {
 
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6), sqlInjectionValidator()]],
     });
 
     this.form.valueChanges.subscribe((value) => {
